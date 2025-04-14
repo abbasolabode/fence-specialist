@@ -4,7 +4,7 @@ import { LiaTimesSolid } from "react-icons/lia";
 
 export default function ContactForm() {
 	return (
-		<div className="w-[24.375rem] min-h-[35rem] mt-12  ">
+		<div className="w-[24.375rem] min-h-[35rem] mt-12 2xl:w-[94.5rem] 2xl:min-h-[35rem] 2xl:mt-0 2xl:mb-10 2xl:bg-utiliBlue border">
 			<div className="text-[2rem] 2xl:w-[89.5rem] 2xl:min-h-[20.5rem] 2xl:rounded-[1.5rem] 2xl:pl-[2.5rem] 2xl:pr-[2.5rem]">
 				<span className="flex justify-end mr-3">
 					<LiaTimesSolid className="font-light text-dimGray 2xl:text-white" />

@@ -95,16 +95,17 @@ export default function Testimonial() {
 	};
 
 	return (
-		<div className="w-[24.375rem] min-h-[40rem] mx-auto flex flex-col items-center overflow-hidden">
-			<div className="w-[23rem] min-h-[35rem] border rounded-xl bg-spanYellow">
-				<div className="w-[23rem] min-h-[10rem] ">
-					<h2 className="w-[20rem] text-center ml-4 pt-[2rem] text-white text-[1.2rem]  font-poppins font-medium">
+		<div className="w-[24.375rem] min-h-[40rem] mx-auto flex flex-col items-center overflow-hidden 2xl:w-[89.5rem] ">
+			<div className="w-[23rem] min-h-[35rem] rounded-xl bg-[#F8F9FA] max-full 2xl:w-full 2xl:shadow-lg">
+				<div className="w-[23rem] min-h-[10rem] 2xl:w-[89.5rem] 2xl:min-h-[6.75rem] 2xl:flex 2xl:justify-between">
+					<h2 className="w-[20rem] text-center ml-4 pt-[2rem] text-[1.2rem] font-poppins font-medium 2xl:w-[20rem] 2xl:text-black 2xl:min-h-full 2xl:text-left font-lato font-semibold 2xl:text-[2.5rem]">
 						Hear from our
-						<span className="text-utiliBlue pl-1">satisfied customers</span>
+						<br/>
+						<span className="text-utiliBlue pl-1 font-sourceSerif italic ">satisfied customers</span>
 					</h2>
 
-					<div className="hidden">
-						<div>
+					<div className="hidden 2xl:block 2xl:w-[14.3125rem] 2xl:min-h-[5.25rem] 2xl:flex 2xl:flex-col 2xl:justify-center">
+						<div className="2xl:w-[7.875rem] 2xl:min-h-[3rem] 2xl:flex">
 							<span>
 								<img src="/images/icon2.png" alt="google icon" />
 							</span>
@@ -112,13 +113,13 @@ export default function Testimonial() {
 								<img src="/images/icon3.png" alt="facebook icon" />
 							</span>
 							<span>
-								<img src="/images/icon4.png" alt="icon" />
+								<img src="/images/icon4.png" alt="icon"  />
 							</span>
 						</div>
-						<div>
-							<span>
-								<p>(5.0) ratings from 48 reviews</p>
-								<img src="/images/Star.png" alt="star icon" />
+						<div className="2xl:w-[12.8125rem] 2xl:min-h-[1.1875rem]  2xl:relative 2xl:right-[2rem]">
+							<span className="flex gap-2 items-center 2xl:w-full 2xl:min-h-full">
+								<img src="/images/Star.png" alt="star icon" className="2xl:w-[1.25rem] 2xl:min-h-[1.25rem]"/>
+								<p className="whitespace-nowrap font-lato 2xl:w-[10rem]">(5.0) ratings from 48 reviews</p>
 							</span>
 						</div>
 					</div>
@@ -127,7 +128,7 @@ export default function Testimonial() {
 				<div>
 					<Slider {...settings}>
 						{testimonials.map((testimonial) => (
-							<div key={testimonial.id} className="flex flex-col items-center">
+							<div key={testimonial.id} className="flex flex-col items-center 2xl:w-[89.5rem] 2xl:min-h-[9.75rem]">
 								<div className="w-[23rem] mx-auto flex justify-center">
 									<img
 										src={testimonial.image}
@@ -135,9 +136,11 @@ export default function Testimonial() {
 										alt="testimonial icon"
 									/>
 								</div>
-								<p className="w-[20.5rem] text-center pl-2 text-white font-poppins pt-6">
-									{testimonial.content}
-								</p>
+								<div className="2xl:w-[89.5rem] 2xl:min-h-[5rem] 2xl:pt-[2rem] 2xl:flex 2xl:justify-center">
+									<p className="w-[20.5rem] text-center pl-2 text-white font-poppins 2xl:w-[50.5rem] 2xl:text-black">
+									   {testimonial.content}
+								    </p>
+								</div>
 
 								<p className="text-[0.9rem] pt-3 font-poppins text-center text-utiliBlue">
 									{testimonial.name}
@@ -147,7 +150,9 @@ export default function Testimonial() {
 					</Slider>
 				</div>
 			</div>
-			<div className="mt-5">
+			
+	
+			<div className="mt-5 2xl:w-[89.5rem] 2xl:text-left">
 				<AnchorLink testimonial="/gallery">
 					<p className="mx-auto">
 						See gallery

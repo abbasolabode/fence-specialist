@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import AppLayout from "./components/ui/AppLayout";
 import Home from "./pages/Home";
@@ -11,8 +12,6 @@ import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import Estimate from "./pages/Estimate";
 import PathNotFound from "./pages/PathNotFound"; 
-
-
 import Login from "./components/authentication/Login";
 
 // Create cached (where data gets stored)
@@ -29,6 +28,7 @@ function App() {
 		<div>
 			{/* Provides data for all the components in the app */}
 			<QueryClientProvider client={queryClient}>
+				<ReactQueryDevtools initialIsOpen={false} />
 				<BrowserRouter>
 					<Routes>
 						<Route element={<AppLayout />}>

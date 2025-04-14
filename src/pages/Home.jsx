@@ -21,7 +21,7 @@ export default function Home() {
 
 
 	return (
-		<div className="min-h-[500rem]">
+		<div className="min-h-[500rem] overflow-hidden">
 			<Header />
 			<HeroContents/>
 			
