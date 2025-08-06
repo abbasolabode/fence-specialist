@@ -8,107 +8,122 @@ import { usePastWorkImage } from "../hooks/usePastWorkImage";
 import Spinner from "./Spinner";
 
 export default function SliderImages() {
-  const navigate = useNavigate();
+	const navigate = useNavigate();
+	const { pastWorkImages = [], isLoading } = usePastWorkImage();
 
-  // Custom Hook
-  const { pastWorkImages = [], isLoading } = usePastWorkImage();
-  if (isLoading) return <Spinner />;
+	if (isLoading) return <Spinner />;
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    responsive: [
-      {
-        breakpoint: 390,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-        },
-      },
-      {
-        breakpoint: 428,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 5,
-        },
-      },
-      {
-        breakpoint: 1512,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
-        },
-      },
-    ],
-  };
+	// Responsive slider settings
+	const settings = {
+		dots: false,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		nextArrow: <NextArrow />,
+		prevArrow: <PrevArrow />,
+		responsive: [
+			{
+				breakpoint: 640, // sm
+				settings: {
+					slidesToShow: 2,
+					slidesToScroll: 2,
+				},
+			},
+			{
+				breakpoint: 768, // md
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 3,
+				},
+			},
+			{
+				breakpoint: 1024, // lg
+				settings: {
+					slidesToShow: 4,
+					slidesToScroll: 4,
+				},
+			},
+			{
+				breakpoint: 1280, // xl
+				settings: {
+					slidesToShow: 5,
+					slidesToScroll: 5,
+				},
+			},
+		],
+	};
 
-  return (
-    <div className="w-[24.375rem] min-h-[30rem] pt-[2.5rem] 2xl:w-[89.5rem] 2xl:min-h-[30.75rem] mx-auto 2xl:pt-[10rem] 2xl:mt-[4rem]">
-      <div className="min-h-full text-center flex flex-col justify-center items-center w-full 2xl:w-[89.5rem] 2xl:min-h-[30.75rem]">
-        <div className="min-h-[30rem] w-[23rem] xl:w-[89.5rem] 2xl:min-h-[30.75rem] 2xl:flex 2xl:flex-col 2xl:items-start 2xl:justify-between">
-          <div className="2xl:w-[89.5rem] 2xl:min-h-[6.75rem] 2xl:flex 2xl:justify-between">
-            <div className="2xl:w-[24.2rem] 2xl:min-h-[6.75rem]">
-              <h3 className="font-lato text-[1.5rem] w-[22rem] min-h-full 2xl:text-left 2xl:font-semibold 2xl:w-full 2xl:text-[2.5rem] leading-[100%] text-[#0A0C0D]">
-                Take a look at our <br />
-                <span className="text-lato pl-1 text-utiliBlue font-sourceSerif italic">
-                  past fencing work
-                </span>
-              </h3>
-            </div>
+	// Custom arrow components
+	function NextArrow(props) {
+		const { onClick } = props;
+		return (
+			<button
+				onClick={onClick}
+				className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-yellow-400 hover:bg-yellow-500 transition-colors"
+				aria-label="Next"
+			>
+				<MdKeyboardArrowRight className="text-xl" />
+			</button>
+		);
+	}
 
-            {/* button for large screens */}
-            <div className="hidden 2xl:block 2xl:flex 2xl:items-center">
-              <AnchorLink takeALook="/ourwork" gallery="flex items-center justify-center w-[8rem] 2xl:w-[6.8125rem] 2xl:min-h-[2.6875rem] 2xl:rounded-[0.5rem]">
-                See gallery
-              </AnchorLink>
-            </div>
-          </div>
+	function PrevArrow(props) {
+		const { onClick } = props;
+		return (
+			<button
+				onClick={onClick}
+				className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-yellow-400 hover:bg-yellow-500 transition-colors"
+				aria-label="Previous"
+			>
+				<MdKeyboardArrowLeft className="text-xl" />
+			</button>
+		);
+	}
 
+	return (
+		<div className="w-full px-4 py-8 md:py-12 lg:py-16 xl:py-20 max-w-7xl mx-auto">
+			<div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 lg:mb-10">
+				<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 text-center lg:text-left mb-4 lg:mb-0">
+					Take a look at our{" "}
+					<span className="text-blue-600 italic">past fencing work</span>
+				</h2>
 
-          <div className="min-h-[15rem] w-[23rem] flex items-center relative 2xl:w-[94.5rem]">
-            <span className="w-[2rem] flex justify-center z-30 ml-3 items-center absolute left-[-0.5rem] py-2 rounded-full px-2 bg-spanYellow">
-              <MdKeyboardArrowLeft />
-            </span>
-            <Slider
-              {...settings}
-              className="w-full max-w-full 2xl:w-[89.5rem] 2xl:min-h-[30.75rem] 2xl:pt-[5rem]"
-            >
-              {pastWorkImages.map((pastWorkImage) => (
-                <div key={pastWorkImage?.id} className="px-0.5">  {/* Reduced from px-2 to px-1 */}
-                  <img
-                    className="w-full max-w-[18rem] h-[10rem] object-cover rounded-[1rem] sm:max-w-[20rem] sm:h-[12rem] 2xl:w-[21.5rem] 2xl:h-[20rem]"
-                    src={pastWorkImage?.image}
-                    alt={pastWorkImage?.image}
-                  />
-                </div>
-              ))}
-            </Slider>
-            <span className="w-[2rem] flex justify-center  items-center z-0 absolute right-[-0.5rem] py-2 rounded-full px-2 bg-spanYellow 2xl:right-[8rem]">
-              <MdKeyboardArrowRight />
-            </span>
-          </div>
+				{/* Desktop button */}
+				<div className="hidden lg:block">
+					<AnchorLink
+						href="/ourwork"
+						className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+					>
+						See gallery
+					</AnchorLink>
+				</div>
+			</div>
 
-          {/* Mobile button */}
-          <div className="flex justify-center 2xl:hidden">
-            <AnchorLink
-              gallery="flex items-center min-h-[2rem] w-[6rem] py-1 px-1 text-[0.8rem] justify-center"
-              onClickGallery={() => navigate("/")}
-            >
-              See gallery
-            </AnchorLink>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+			<div className="relative">
+				<Slider {...settings} className="w-full">
+					{pastWorkImages.map((pastWorkImage) => (
+						<div key={pastWorkImage?.id} className="px-2">
+							<img
+								className="w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 object-cover rounded-lg shadow-md"
+								src={pastWorkImage?.image}
+								alt={pastWorkImage?.image}
+								loading="lazy"
+							/>
+						</div>
+					))}
+				</Slider>
+			</div>
+
+			{/* Mobile button */}
+			<div className="flex justify-center mt-6 lg:hidden">
+				<AnchorLink
+					href="/ourwork"
+					className="inline-flex items-center justify-center px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors text-sm"
+				>
+					See gallery
+				</AnchorLink>
+			</div>
+		</div>
+	);
 }

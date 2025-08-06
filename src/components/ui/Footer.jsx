@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function  Footer() {
 	return (
-		<div className="min-w-full min-h-[60rem]mt-[8rem] bg-black md:w-full md:px-8 lg:px-12 2xl:w-[94.5rem] 2xl:flex 2xl:flex-col 2xl:items-center 2xl:min-h-[43.875rem]">
+		<div className="min-w-full min-h-[40rem] mt-[8rem] bg-black md:w-full md:px-8 lg:px-12 2xl:w-[94.5rem] 2xl:flex 2xl:flex-col 2xl:items-center 2xl:min-h-[43.875rem]">
 			{/* Top section */}
 			<div className="min-w-full px-4 mx-auto md:max-w-none md:w-full md:px-0 lg:w-[71.625rem] lg:mx-auto 2xl:w-[71.625rem] 2xl:min-h-[18.9375rem] 2xl:flex 2xl:items-center 2xl:gap-[7.5rem] 2xl:mt-[4rem]">
 				{/* First container */}
