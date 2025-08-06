@@ -1,18 +1,20 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { IsOpenContactFormProvider } from "./context/IsOpenContactForm";
 import { Toaster } from "react-hot-toast";
 import AppLayout from "./components/ui/AppLayout";
 import Home from "./pages/Home";
 
 import About from "./pages/About";
 import Services from "./pages/Services";
-import ServiceArea from "./pages/ServiceArea";
-import Gallery from "./pages/Gallery";
+import OurWork from "./pages/OurWork";
 import Contact from "./pages/Contact";
 import Estimate from "./pages/Estimate";
-import PathNotFound from "./pages/PathNotFound"; 
+import PathNotFound from "./pages/PathNotFound";
 import Login from "./components/authentication/Login";
+import FenceAppointment from "./components/ui/FenceAppointment";
+import ThankYou from "./components/ui/ThankYou";
 
 // Create cached (where data gets stored)
 const queryClient = new QueryClient({
@@ -27,46 +29,50 @@ function App() {
 	return (
 		<div>
 			{/* Provides data for all the components in the app */}
-			<QueryClientProvider client={queryClient}>
-				<ReactQueryDevtools initialIsOpen={false} />
-				<BrowserRouter>
-					<Routes>
-						<Route element={<AppLayout />}>
-							{/* Navigates to the home and also replaces the previous route with home in the history stack */}
-							<Route index element={<Navigate replace to="home" />} />
-							<Route path="home" element={<Home />} />
-							<Route path="about" element={<About />} />
-							<Route path="services" element={<Services />} />
-							<Route path="ServiceArea" element={<ServiceArea />} />
-							<Route path="Gallery" element={<Gallery />} />
-							<Route path="contact" element={<Contact />} />
-						</Route>
-						<Route path="estimate" element={<Estimate />} />
-						<Route path="login" element={<Login />} />
-						<Route path="*" element={<PathNotFound />} />
-					</Routes>
-				</BrowserRouter>
-				<Toaster
-					position="top-center"
-					gutter={12}
-					containerStyle={{ margin: "8px" }}
-					toastOptions={{
-						success: {
-							duration: 3000,
-						},
-						error: {
-							duration: 5000,
-						},
-						styles: {
-							fontSize: "16px",
-							padding: "16px 24px",
-							maxWidth: "500px",
-							backgroundColor: "var(--color-grey-0)", // Ensure these custom properties are defined in your CSS
-							color: "var(--color-grey-0)", // Ensure these custom properties are defined in your CSS
-						},
-					}}
-				/>
-			</QueryClientProvider>
+			<IsOpenContactFormProvider>
+				<QueryClientProvider client={queryClient}>
+					<ReactQueryDevtools initialIsOpen={false} />
+					<BrowserRouter>
+						<Routes>
+							<Route element={<AppLayout />}>
+								{/* Navigates to the home and also replaces the previous route with home in the history stack */}
+								<Route index element={<Navigate replace to="home" />} />
+								<Route path="home" element={<Home />} />
+								<Route path="about" element={<About />} />
+								<Route path="services" element={<Services />} />
+
+								<Route path="ourwork" element={<OurWork />} />
+								<Route path="contact" element={<Contact />} />
+							</Route>
+							<Route path="estimate" element={<Estimate />} />
+							<Route path="thankYou" element={<ThankYou />} />
+							<Route path="appointment" element={<FenceAppointment />} />
+							<Route path="login" element={<Login />} />
+							<Route path="*" element={<PathNotFound />} />
+						</Routes>
+					</BrowserRouter>
+					<Toaster
+						position="top-center"
+						gutter={12}
+						containerStyle={{ margin: "8px" }}
+						toastOptions={{
+							success: {
+								duration: 3000,
+							},
+							error: {
+								duration: 5000,
+							},
+							styles: {
+								fontSize: "16px",
+								padding: "16px 24px",
+								maxWidth: "500px",
+								backgroundColor: "var(--color-grey-0)", // Ensure these custom properties are defined in your CSS
+								color: "var(--color-grey-0)", // Ensure these custom properties are defined in your CSS
+							},
+						}}
+					/>
+				</QueryClientProvider>
+			</IsOpenContactFormProvider>
 		</div>
 	);
 }

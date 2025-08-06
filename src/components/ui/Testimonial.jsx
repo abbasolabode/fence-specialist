@@ -96,11 +96,11 @@ export default function Testimonial() {
 
 	return (
 		<div className="w-[24.375rem] min-h-[40rem] mx-auto flex flex-col items-center overflow-hidden 2xl:w-[89.5rem] ">
-			<div className="w-[23rem] min-h-[35rem] rounded-xl bg-[#F8F9FA] max-full 2xl:w-full 2xl:shadow-lg">
+			<div className="w-[23rem] min-h-[35rem] rounded-xl bg-[#d9e7f3f5] max-full 2xl:w-full 2xl:shadow-md">
 				<div className="w-[23rem] min-h-[10rem] 2xl:w-[89.5rem] 2xl:min-h-[6.75rem] 2xl:flex 2xl:justify-between">
-					<h2 className="w-[20rem] text-center ml-4 pt-[2rem] text-[1.2rem] font-poppins font-medium 2xl:w-[20rem] 2xl:text-black 2xl:min-h-full 2xl:text-left font-lato font-semibold 2xl:text-[2.5rem]">
+					<h2 className="w-[20rem] text-center ml-4 pt-[2rem] text-[1.2rem] font-poppins font-medium 2xl:w-[20rem] 2xl:text-black 2xl:min-h-full 2xl:text-left font-semibold 2xl:text-[2.5rem]">
 						Hear from our
-						<br/>
+						<br />
 						<span className="text-utiliBlue pl-1 font-sourceSerif italic ">satisfied customers</span>
 					</h2>
 
@@ -113,12 +113,12 @@ export default function Testimonial() {
 								<img src="/images/icon3.png" alt="facebook icon" />
 							</span>
 							<span>
-								<img src="/images/icon4.png" alt="icon"  />
+								<img src="/images/icon4.png" alt="icon" />
 							</span>
 						</div>
 						<div className="2xl:w-[12.8125rem] 2xl:min-h-[1.1875rem]  2xl:relative 2xl:right-[2rem]">
 							<span className="flex gap-2 items-center 2xl:w-full 2xl:min-h-full">
-								<img src="/images/Star.png" alt="star icon" className="2xl:w-[1.25rem] 2xl:min-h-[1.25rem]"/>
+								<img src="/images/Star.png" alt="star icon" className="2xl:w-[1.25rem] 2xl:min-h-[1.25rem]" />
 								<p className="whitespace-nowrap font-lato 2xl:w-[10rem]">(5.0) ratings from 48 reviews</p>
 							</span>
 						</div>
@@ -138,8 +138,8 @@ export default function Testimonial() {
 								</div>
 								<div className="2xl:w-[89.5rem] 2xl:min-h-[5rem] 2xl:pt-[2rem] 2xl:flex 2xl:justify-center">
 									<p className="w-[20.5rem] text-center pl-2 text-white font-poppins 2xl:w-[50.5rem] 2xl:text-black">
-									   {testimonial.content}
-								    </p>
+										{testimonial.content}
+									</p>
 								</div>
 
 								<p className="text-[0.9rem] pt-3 font-poppins text-center text-utiliBlue">
@@ -150,10 +150,10 @@ export default function Testimonial() {
 					</Slider>
 				</div>
 			</div>
-			
-	
+
+
 			<div className="mt-5 2xl:w-[89.5rem] 2xl:text-left">
-				<AnchorLink testimonial="/gallery">
+				<AnchorLink testimonial="/ourwork">
 					<p className="mx-auto">
 						See gallery
 					</p>

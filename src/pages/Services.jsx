@@ -1,7 +1,17 @@
-
+import Navbar from "../components/ui/Navbar";
 
 export default function Services() {
-  return (
-    <div>Services</div>
-  )
+	return (
+		<main>
+			<header>
+				<Navbar />
+			</header>
+
+
+			<div>
+				<section>
+				</section>
+			</div>
+		</main>
+	);
 }

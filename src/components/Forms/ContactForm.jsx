@@ -1,129 +1,193 @@
+/* eslint-disable no-unused-vars */
 import AnchorLink from "../ui/AnchorLink";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { LiaTimesSolid } from "react-icons/lia";
+import { useFormContact } from "../../context/IsOpenContactForm";
+import { createPortal } from "react-dom";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { getModalContactData } from "../services/apiModalContact";
 
 export default function ContactForm() {
-	return (
-		<div className="w-[24.375rem] min-h-[35rem] mt-12 2xl:w-[94.5rem] 2xl:min-h-[35rem] 2xl:mt-0 2xl:mb-10 2xl:bg-utiliBlue border">
-			<div className="text-[2rem] 2xl:w-[89.5rem] 2xl:min-h-[20.5rem] 2xl:rounded-[1.5rem] 2xl:pl-[2.5rem] 2xl:pr-[2.5rem]">
-				<span className="flex justify-end mr-3">
-					<LiaTimesSolid className="font-light text-dimGray 2xl:text-white" />
-				</span>
+	//useForm hook from react form 
+	const { register, handleSubmit, reset, formState } = useForm();
+	const { errors } = formState;
+	
+	//Custom hook
+	const { closeModal } = useFormContact();
+    
+	//useQueryClient from REACT QUERY
+	const queryClient = useQueryClient();
 
-				<h2 className="text-center mb-7 pt-2 2xl:w-[84.5rem] 2xl:font-lato 2xl:font-semibold 2xl:text-[2.5rem] 2xl:leading-[3rem] 2xl:min-h-[3.4375rem]">
-					Get Your
-					<span className="italic font-lato text-spanYellow ml-2 mr-2">
-						free quote
-					</span>
-					now
-				</h2>
-				<form className="2xl:w-[89.5rem] 2xl:min-h-[20.5rem] 2xl:pl-[2.5rem] 2xl:pr-[2.5rem] 2xl:pb-[2rem] 2xl:pt-[2rem] 2xl:rounded-[1.5rem] 2xl:bg-black">
-					<div className="w-[24.375rem] min-h-[40rem]  flex flex-col items-center justify-center 2xl:flex-row 2xl:w-[84.5rem] 2xl:min-h-[9.75rem] 2xl:gap-[1.5rem] ">
-						<span className="flex items-center justify-center 2xl:min-h-[4.3rem] 2xl:w-[13.25rem] gap-2 mb-4 2xl:flex-col">
-							<label
-								htmlFor="fname"
-								className="text-[1.5rem] font-lato hidden  2xl:mr-[10rem] 2xl:block 2xl:min-h-[1rem] 2xl:text-[0.9rem] 2xl:leading-[1.05rem] 2xl:font-medium 2xl:text-zinc-400"
-							>
-								Name:
+	const { mutate, isLoading } = useMutation({
+		//The API function to get called
+		mutationFn: getModalContactData,
+		//If there's a successful mutation the onSuccess function gets called
+		onSuccess: () => {
+			toast.success("Your form was successfully submitted");
+			queryClient.invalidateQueries({queryKey: ["contactUsForm"] });
+		},
+		//If the mutation is unsuccessful, the onError function gets called
+		onError: (err) => toast.error(err.message),
+	});
+
+	//The function that gets called when an onSubmit event happens
+	function onSubmit(data) {
+		mutate(data, {
+			//reset the input fields if the mutation is successful or failed
+			onSettled: () => {
+				reset();
+			}
+		});
+	}
+
+
+	return createPortal(
+		<div className="fixed inset-0 z-[1000] flex items-center justify-center bg-[#222222d7] bg-opacity-20 backdrop-blur-md p-4">
+			<div className="w-full max-w-4xl bg-black rounded-xl shadow-xl overflow-hidden">
+				{/* Header */}
+				<div className="flex justify-between items-center p-4 bg-black border-b border-gray-800">
+					<h2 className="text-xl md:text-2xl font-semibold text-white">
+						Get Your <span className="italic text-spanYellow">free quote</span> now
+					</h2>
+					<button
+						onClick={closeModal}
+						className="text-gray-400 hover:text-white transition-colors"
+					>
+						<LiaTimesSolid className="text-2xl" />
+					</button>
+				</div>
+
+				{/* Form */}
+				<form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-6">
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+						{/* Name */}
+						<div className="space-y-1">
+							<label htmlFor="name" className="block text-sm font-medium text-gray-400">
+								Name
 							</label>
 							<input
 								type="text"
-								id="fname"
+								id="name"
 								placeholder="Enter your full name"
-								className="w-[23rem] min-h-[2.5rem] 2xl:min-h-[2.7rem] 2xl:placeholder:w-[7.875rem]  2xl:text-white 2xl:bg-black 2xl:outline 2xl:outline-8 2xl:placeholder:min-h-[1rem] 2xl:placeholder:text-[0.875rem] 2xl:placeholder:text-zinc-400 2xl:placeholder:font-normal 2xl:w-[13.25rem] px-3 py-3 rounded-lg placeholder:text-center text-[1.3rem] placeholder: outline-none border border-dimGray placeholder:font-lato placeholder:font-light"
+								{...register("name", { required: "This field is required" })}
+								className="w-full px-4 py-2 bg-gray-900 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-1 focus:ring-spanYellow"
 							/>
-						</span>
+							{errors?.name && (
+								<small className="text-red-500 text-sm">{errors.name.message}</small>
+							)}
+						</div>
 
-						<span className="flex items-center gap-2 justify-center 2xl:flex-col 2xl:min-h-[4.3rem] mb-4 2xl:w-[13.25rem]">
-							<label
-								htmlFor="email"
-								className="text-[1.5rem] font-lato hidden 2xl:block 2xl:mr-[10rem] 2xl:min-h-[1rem] 2xl:text-[0.9rem] 2xl:leading-[1.05rem] 2xl:font-medium 2xl:text-zinc-400"
-							>
+						{/* Email */}
+						<div className="space-y-1">
+							<label htmlFor="email" className="block text-sm font-medium text-gray-400">
 								Email
 							</label>
 							<input
 								type="email"
 								id="email"
 								placeholder="Enter your email"
-								className="w-[23rem] min-h-[2.3rem] 2xl:min-h-[2.7rem] 2xl:w-[13.25rem] px-3 py-2  2xl:text-white 2xl:bg-black 2xl:outline 2xl:outline-8 rounded-lg placeholder:text-center placeholder:text-[1.3rem] 2xl:placeholder:text-zinc-400 outline-none border border-dimGray placeholder:font-lato placeholder:font-light 2xl:placeholder:w-[7.875rem] 2xl:placeholder:min-h-[1rem] 2xl:placeholder:text-[0.875rem] 2xl:placeholder:font-normal"
+								{...register("email", { required: "This field is required" })}
+								className="w-full px-4 py-2 bg-gray-900 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-1 focus:ring-spanYellow"
 							/>
-						</span>
+							{errors?.email && (
+								<small className="text-red-500 text-sm">{errors.email.message}</small>
+							)}
+						</div>
 
-						<span className="flex items-center gap-2 mb-4  2xl:min-h-[4.3rem] 2xl:w-[13.25rem] 2xl:flex-col">
-							<label
-								htmlFor="phone"
-								className="text-[1.3rem] font-lato hidden 2xl:block 2xl:mr-[5rem] 2xl:whitespace-nowrap 2xl:min-h-[1rem]  2xl:text-[0.9rem] 2xl:leading-[1.05rem] 2xl:font-medium 2xl:text-zinc-400"
-							>
+						{/* Telephone */}
+						<div className="space-y-1">
+							<label htmlFor="telephone" className="block text-sm font-medium text-gray-400">
 								Telephone number
 							</label>
 							<input
 								type="tel"
-								id="phone"
+								id="telephone"
 								placeholder="Enter your phone number"
-								className="w-[23rem] min-h-[3rem] px-3 py-2 2xl:min-h-[2.7rem]  2xl:text-white 2xl:bg-black 2xl:outline 2xl:outline-8 2xl:w-[13.25rem] rounded-lg placeholder:text-[1.3rem] placeholder:text-center 2xl:placeholder:text-zinc-400 outline-none border border-dimGray placeholder:font-lato placeholder:font-light 2xl:placeholder:w-[7.875rem] 2xl:placeholder:min-h-[1rem] 2xl:placeholder:text-[0.875rem] 2xl:placeholder:font-normal"
+								{...register("telephone", { required: "This field is required" })}
+								className="w-full px-4 py-2 bg-gray-900 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-1 focus:ring-spanYellow"
 							/>
-						</span>
+							{errors?.telephone && (
+								<small className="text-red-500 text-sm">{errors.telephone.message}</small>
+							)}
+						</div>
 
-						<span className="flex items-center gap-2 mb-4  2xl:min-h-[4.3rem] 2xl:w-[13.25rem]  2xl:flex-col">
-							<label
-								htmlFor="service"
-								className="text-[1.5rem] font-lato hidden 2xl:block  2xl:mr-[5rem]  2xl:whitespace-nowrap 2xl:min-h-[1rem] 2xl:text-[0.9rem] 2xl:leading-[1.05rem] 2xl:font-medium 2xl:text-zinc-400"
-							>
+						{/* Service */}
+						<div className="space-y-1">
+							<label htmlFor="service" className="block text-sm font-medium text-gray-400">
 								Service interested in
 							</label>
 							<input
 								type="text"
 								id="service"
 								placeholder="Enter the service you're interested in"
-								className="w-[23rem] min-h-[3rem] 2xl:min-h-[2.7rem] 2xl:w-[13.25rem]  2xl:text-white 2xl:bg-black 2xl:outline 2xl:outline-8 px-3 py-2 rounded-lg placeholder:text-[1.3rem] placeholder:text-center 2xl:placeholder:text-zinc-400  outline-none border border-dimGray placeholder:font-lato placeholder:font-light 2xl:placeholder:w-[7.875rem] 2xl:placeholder:min-h-[1rem] 2xl:placeholder:text-[0.875rem] 2xl:placeholder:font-normal"
+								{...register("service", { required: "This field is required" })}
+								className="w-full px-4 py-2 bg-gray-900 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-1 focus:ring-spanYellow"
 							/>
-						</span>
+							{errors?.service && (
+								<small className="text-red-500 text-sm">{errors.service.message}</small>
+							)}
+						</div>
 
-						<span className="flex items-center gap-2 mb-6  2xl:min-h-[2.7rem] 2xl:w-[13.25rem]  2xl:flex-col">
-							<label
-								htmlFor="zip"
-								className="text-[1.5rem]  font-lato hidden 2xl:block 2xl:mr-[9rem]  2xl:min-h-[1rem] 2xl:text-[0.9rem] 2xl:leading-[1.05rem] 2xl:font-medium 2xl:text-zinc-400"
-							>
+						{/* Zip Code */}
+						<div className="space-y-1">
+							<label htmlFor="zipcode" className="block text-sm font-medium text-gray-400">
 								Zip code
 							</label>
 							<input
 								type="text"
-								id="zip"
+								id="zipcode"
 								placeholder="Enter your zip code"
-								className="w-[23rem] 2xl:min-h-[4.3rem] 2xl:w-[13.25rem] min-h-[3rem] 2xl:text-white 2xl:bg-black 2xl:outline 2xl:outline-8 px-3 py-2 rounded-lg placeholder:text-center placeholder:text-[1.3rem] outline-none border 2xl:placeholder:text-zinc-400 border-dimGray placeholder:font-lato placeholder:font-light 2xl:placeholder:w-[7.875rem] 2xl:placeholder:min-h-[1rem] 2xl:placeholder:text-[0.875rem] 2xl:placeholder:font-normal"
+								{...register("zipcode", { required: "This field is required" })}
+								className="w-full px-4 py-2 bg-gray-900 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-1 focus:ring-spanYellow"
 							/>
-						</span>
+							{errors?.zipcode && (
+								<small className="text-red-500 text-sm">{errors.zipcode.message}</small>
+							)}
+						</div>
 
-						<span className="flex items-center gap-2 min-h-[7rem] 2xl:w-[13.25rem] 2xl:flex-col">
-							<label
-								htmlFor="message"
-								className="text-[1rem] font-lato hidden 2xl:mr-[4rem] 2xl:whitespace-nowrap 2xl:block 2xl:min-h-[1rem] 2xl:text-[0.9rem] 2xl:leading-[1.05rem] 2xl:font-medium 2xl:text-zinc-400"
-							>
+						{/* Message */}
+						<div className="md:col-span-2 space-y-1">
+							<label htmlFor="message" className="block text-sm font-medium text-gray-400">
 								How can we help you?
 							</label>
 							<textarea
-								name="message"
 								id="message"
 								minLength="4"
 								maxLength="10"
 								placeholder="How can we help you?"
-								className="w-[23rem] 2xl:min-h-[2.7rem] 2xl:w-[13.25rem] 2xl:text-white 2xl:bg-black 2xl:outline 2xl:outline-8 min-h-[10rem] px-3 py-2 rounded-lg placeholder:text-[1.3rem] 2xl:placeholder:text-zinc-400 outline-none border border-dimGray placeholder:font-lato placeholder:font-light 2xl:placeholder:w-[9.875rem] 2xl:placeholder:min-h-[1rem] 2xl:placeholder:text-[0.875rem] 2xl:placeholder:font-normal"
+								{...register("message", { required: "This field is required" })}
+								className="w-full px-4 py-2 bg-gray-900 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-1 focus:ring-spanYellow min-h-[120px]"
 							></textarea>
-						</span>
+							{errors?.message && (
+								<small className="text-red-500 text-sm">{errors.message.message}</small>
+							)}
+						</div>
 					</div>
-					<div className="gap-2 mt-[2.5rem] mx-auto flex justify-center">
-						<AnchorLink formBtnStyled="flex justify-center bg-dimGray">
-							<span className="flex items-center gap-1">
+
+					{/* Buttons */}
+					<div className="flex flex-col sm:flex-row gap-4 mt-6">
+						<AnchorLink
+							disabledBtnModalContact={isLoading}
+							formBtnStyled="flex-1 bg-dimGray hover:bg-gray-600 transition-colors"
+						>
+							<span className="flex items-center justify-center gap-1">
 								<p className="font-semibold">Get a Free Quote</p>
-								<MdKeyboardArrowRight className="text-[1.2rem]" />
+								<MdKeyboardArrowRight className="text-xl" />
 							</span>
 						</AnchorLink>
-						<AnchorLink cancelBtn="flex justify-center bg-dimGray">
+						<AnchorLink
+							cancelModalContactForm={closeModal}
+							disabledBtnCancelModalContact={isLoading}
+							cancelBtn="flex-1 bg-dimGray hover:bg-gray-600 transition-colors"
+						>
 							<p className="font-semibold">Cancel</p>
 						</AnchorLink>
 					</div>
 				</form>
 			</div>
-		</div>
+		</div>,
+		document.body
 	);
 }

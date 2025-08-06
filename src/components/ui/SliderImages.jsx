@@ -68,40 +68,40 @@ export default function SliderImages() {
 
             {/* button for large screens */}
             <div className="hidden 2xl:block 2xl:flex 2xl:items-center">
-              <AnchorLink gallery="flex items-center justify-center w-[8rem] 2xl:w-[6.8125rem] 2xl:min-h-[2.6875rem] 2xl:rounded-[0.5rem]">
+              <AnchorLink takeALook="/ourwork" gallery="flex items-center justify-center w-[8rem] 2xl:w-[6.8125rem] 2xl:min-h-[2.6875rem] 2xl:rounded-[0.5rem]">
                 See gallery
               </AnchorLink>
             </div>
           </div>
 
-        
+
           <div className="min-h-[15rem] w-[23rem] flex items-center relative 2xl:w-[94.5rem]">
-  <span className="w-[2rem] flex justify-center z-30 items-center absolute left-[-0.5rem] py-2 rounded-full px-2 bg-spanYellow">
-    <MdKeyboardArrowLeft />
-  </span>
-<Slider 
-  {...settings} 
-  className="w-full max-w-full 2xl:w-[89.5rem] 2xl:min-h-[30.75rem] 2xl:pt-[5rem]"
->
-  {pastWorkImages.map((pastWorkImage) => (
-    <div key={pastWorkImage?.id} className="px-0.5">  {/* Reduced from px-2 to px-1 */}
-      <img
-        className="w-full max-w-[18rem] h-[10rem] object-cover rounded-[1rem] sm:max-w-[20rem] sm:h-[12rem] 2xl:w-[21.5rem] 2xl:h-[20rem]"
-        src={pastWorkImage?.image}
-        alt={pastWorkImage?.image}
-      />
-    </div>
-  ))}
-</Slider>
-  <span className="w-[2rem] flex justify-center z-50 items-center absolute right-[-0.5rem] py-2 rounded-full px-2 bg-spanYellow 2xl:right-[8rem]">
-    <MdKeyboardArrowRight />
-  </span>
-</div>
+            <span className="w-[2rem] flex justify-center z-30 ml-3 items-center absolute left-[-0.5rem] py-2 rounded-full px-2 bg-spanYellow">
+              <MdKeyboardArrowLeft />
+            </span>
+            <Slider
+              {...settings}
+              className="w-full max-w-full 2xl:w-[89.5rem] 2xl:min-h-[30.75rem] 2xl:pt-[5rem]"
+            >
+              {pastWorkImages.map((pastWorkImage) => (
+                <div key={pastWorkImage?.id} className="px-0.5">  {/* Reduced from px-2 to px-1 */}
+                  <img
+                    className="w-full max-w-[18rem] h-[10rem] object-cover rounded-[1rem] sm:max-w-[20rem] sm:h-[12rem] 2xl:w-[21.5rem] 2xl:h-[20rem]"
+                    src={pastWorkImage?.image}
+                    alt={pastWorkImage?.image}
+                  />
+                </div>
+              ))}
+            </Slider>
+            <span className="w-[2rem] flex justify-center  items-center z-0 absolute right-[-0.5rem] py-2 rounded-full px-2 bg-spanYellow 2xl:right-[8rem]">
+              <MdKeyboardArrowRight />
+            </span>
+          </div>
 
           {/* Mobile button */}
           <div className="flex justify-center 2xl:hidden">
-            <AnchorLink 
-              gallery="flex items-center min-h-[2rem] w-[6rem] py-1 px-1 text-[0.8rem] justify-center" 
+            <AnchorLink
+              gallery="flex items-center min-h-[2rem] w-[6rem] py-1 px-1 text-[0.8rem] justify-center"
               onClickGallery={() => navigate("/")}
             >
               See gallery

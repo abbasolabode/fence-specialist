@@ -1,143 +1,267 @@
+import { motion } from "framer-motion";
 import { IoCallOutline } from "react-icons/io5";
 import AnchorLink from "./AnchorLink";
-import ContactForm from "../Forms/ContactForm";
-//import { useState } from "react";
+import { useFormContact } from "../../context/IsOpenContactForm";
+import AvatarModal from "./AvatarModal";
 
-//Background image styling
+// Background image styling
 const backgroundStyling = {
 	backgroundImage: "url('./images/bgImage.png')",
 	backgroundSize: "cover",
 	backgroundPosition: "center",
 	backgroundRepeat: "no-repeat",
+	height: "70rem",
+	minHeight: "650px"
 };
-/* isOpen && "blur-sm drop-shadow-md " */
+
+const containerVariants = {
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: {
+			staggerChildren: 0.2,
+			delayChildren: 0.4,
+			when: "beforeChildren"
+		}
+	}
+};
+
+const itemVariants = {
+	hidden: { opacity: 0, y: 20 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: {
+			type: "spring",
+			stiffness: 80,
+			damping: 10
+		}
+	}
+};
+
+const textVariants = {
+	hidden: { opacity: 0, x: -20 },
+	visible: {
+		opacity: 1,
+		x: 0,
+		transition: {
+			duration: 0.8,
+			ease: "easeOut"
+		}
+	}
+};
+
+const fadeInVariants = {
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: {
+			duration: 1,
+			ease: "easeInOut"
+		}
+	}
+};
 
 export default function HeroContents() {
-	/* const [isOpen, setIsOpen] = useState(false)
-
-    function handleIsOpen(){
-		setIsOpen((open)=>  !open);	
-	} */
+	const { isModalOpen } = useFormContact();
 
 	return (
-		<>
-			<div
-				className={`w-[24.375rem] min-h-[50.7rem] 2xl:w-[94.5rem] 2xl:min-h-[60rem] 2xl:relative`}
-				style={backgroundStyling}
-			>
-				<div className="w-[24.375rem] min-h-[50.7rem] 2xl:w-[94.5rem] 2xl:flex 2xl:justify-between 2xl:items-center">
-					<div className="flex justify-start items-center flex-col ">
-						<div className="2xl:flex 2xl:justify-start 2xl:w-[40rem]">
-							<p className=" mb-2 text-white bg-dimGray px-3 py-2 rounded-lg text-sm mt-[10rem] 2xl:w-[15rem] 2xl:font-medium 2xl:min-h-[1.0625rem] 2xl:text-left 2xl:whitespace-nowrap ">
-								Fence Company in Bloomington MN
-							</p>
-						</div>
-						<h1 className="font-lato text-[2.9rem] text-center font-semibold 2xl:w-[45.5rem] 2xl:min-h-[16.1875rem] 2xl:text-[6rem] 2xl:font-bold text-white 2xl:font-raleway 2xl:text-left">
-							Your Premier Fence
-							<span className="text-spanYellow italic font-medium ml-2 2xl:font-medium font-raleway">
-								Specialists
+		<motion.div
+			className="relative w-full overflow-hidden"
+			style={backgroundStyling}
+			initial="hidden"
+			animate="visible"
+			variants={containerVariants}
+		>
+			<div className="container mx-auto px-4 h-full flex flex-col lg:flex-row items-center justify-center  lg:justify-between py-20 lg:py-0">
+				{/* Left Content */}
+				<div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center gap-[2.5rem] lg:text-left">
+					<motion.p
+						className="mb-4 text-white bg-dimGray px-4 py-2 rounded-lg text-sm lg:text-base w-max"
+						variants={itemVariants}
+					>
+						Fence Company in Bloomington MN
+					</motion.p>
+
+					<motion.h1
+						className="font-lato text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-6 lg:mb-8"
+						variants={{
+							hidden: { opacity: 0, y: 30 },
+							visible: {
+								opacity: 1,
+								y: 0,
+								transition: {
+									delay: 0.3,
+									type: "spring",
+									stiffness: 70,
+									damping: 12,
+									mass: 0.5
+								}
+							}
+						}}
+					>
+						Your Premier Fence
+						<motion.span
+							className="text-spanYellow italic font-medium ml-2 lg:ml-4"
+							initial={{ opacity: 0, scale: 0.8 }}
+							animate={{ opacity: 1, scale: 1 }}
+							transition={{
+								delay: 0.6,
+								type: "spring",
+								stiffness: 200
+							}}
+						>
+							Specialists
+						</motion.span>
+					</motion.h1>
+
+					<motion.p
+						className="text-white text-base sm:text-lg md:text-xl mb-8 lg:mb-12 max-w-lg"
+						variants={{
+							hidden: { opacity: 0, y: 20 },
+							visible: {
+								opacity: 1,
+								y: 0,
+								transition: {
+									delay: 0.5,
+									duration: 0.8,
+									ease: [0.2, 0.8, 0.3, 1]
+								}
+							}
+						}}
+					>
+						Rachuna Fence LLC is a locally owned fencing company based in
+						Bloomington, MN, with over 10 years of experience, we specialize
+						in building high-quality fences that enhance the beauty,
+						security and, privacy of both residential and commercial
+						properties.
+					</motion.p>
+
+					<motion.div
+						className="w-[20rem] min-h-[5rem] flex justify-center lg:justify-start"
+						initial={{ opacity: 0, scale: 0.9 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{
+							delay: 0.8,
+							type: "spring",
+							stiffness: 150
+						}}
+					>
+						<AnchorLink heroBtn="w-full min-h-[3rem] rounded-md">
+							<span className="flex items-center justify-center gap-2 text-white text-lg font-medium hover:text-spanYellow transition-colors">
+								<IoCallOutline />
+								<a href="tel:+16127307260">612-730-7260</a>
 							</span>
-						</h1>
-						<div className="2xl:flex 2xl:items-start 2xl:min-h-[15.5rem] 2xl:flex-col 2xl:w-[43rem]">
-							<p className="text-center mt-4 font-lato w-[22.5rem] text-white 2xl:w-[32.25rem] 2xl:min-h-[10rem] 2xl:leading-[2.5rem] 2xl:font-normal 2xl:text-left">
-								Rachuna Fence LLC is a locally owned fencing company based in
-								Bloomington, MN, with over 10 years of experience, we specialize
-								in building high-quality fences that enhance the beauty,
-								security and, privacy of both residential and commercial
-								properties.
-							</p>
-							<div className="flex justify-center">
-								<AnchorLink homeUi="mt-10">
-									<span className="flex items-center justify-center gap-2 w-[8rem]">
-										<IoCallOutline />
-										<a href="tel:+1234567890">612-730-7260</a>
-									</span>
-								</AnchorLink>
-							</div>
-						</div>
-					</div>
-
-					{/* Right container for large screen*/}
-					<div className="hidden 2xl:w-[43rem] 2xl:min-h-[45.25rem] 2xl:flex 2xl:flex-col 2xl:justify-between overflow-hidden">
-						<div className="2xl:flex 2xl:items-center 2xl:gap-1  2xl:w-[45rem] overflow-hidden">
-							<div className="flex items-center 2xl:w-[15.5rem] 2xl:gap-2 2xl:min-h-[1.1875rem]">
-								<span>
-									<img src="./images/icon1.png" alt="mark" />
-								</span>
-								<p className="2xl:text-white 2xl:whitespace-nowrap">
-									Over 10 Years of Experience
-								</p>
-							</div>
-							<div className="flex items-center gap-3 2xl:w-[10.9375rem] 2xl:text-white 2xl:whitespace-nowrap 2xl:min-h-[1.1875rem]">
-								<span>
-									<img src="./images/icon1.png" alt="mark" />
-								</span>
-								<p>Over 55 5* Reviews</p>
-							</div>
-							<div className="flex items-center gap-3  2xl:whitespace-nowrap 2xl:text-white 2xl:min-h-[12.5625rem]">
-								<span>
-									<img src="./images/icon1.png" alt="mark" />
-								</span>
-								<p>Family Owned Business</p>
-							</div>
-						</div>
-
-						<div className="2xl:flex 2xl:flex-col 2xl:justify-center 2xl:gap-4 ">
-							<div className="2xl:flex 2xl:items-center 2xl:min-h-[5.75rem] 2xl:gap-5 2xl:flex-col 2xl:w-[15.3125rem] 2xl:">
-								<span className="flex item gap-2 2xl:items-center">
-									<img src="./images/Star.png" alt="star icon" />
-									<p className="text-white 2xl:font-lato">
-										(5.0) ratings from 48 reviews
-									</p>
-								</span>
-
-								<div className="2xl:flex 2xl:justify-start 2xl:text-left 2xl:w-[13.875rem] 2xl:min-h-[3rem]">
-									<span>
-										<img src="./images/icon2.png" alt="Google icon" />
-									</span>
-									<span>
-										<img src="./images/icon3.png" alt="Facebook icon" />
-									</span>
-									<span>
-										<img src="./images/icon4.png" alt="icon" />
-									</span>
-								</div>
-							</div>
-
-							<div className="2xl:flex 2xl:justify-between 2xl:items-center 2xl:gap-[1.5rem] 2xl:w-[38.5rem] 2xl:min-h-[13.4375rem] 2xl:rounded-[0.5rem] 2xl:p-[1rem] 2xl:bg-utiliBlue">
-								<span className="2xl:w-[5rem] 2xl:min-h-[11.4375rem] 2xl:self-start">
-									<img
-										src="./images/vectorIcon.png"
-										alt="person's image"
-										className="2xl:w-[5rem] 2xl:min-h-[5.4375rem]"
-									/>
-								</span>
-								<span className="2xl:w-[30rem] 2xl:min-h-[8.75rem] 2xl:font-medium 2xl:leading-[1.75rem] 2xl:font-lato 2xl:text-white">
-									<p>
-										&quot; As a lifelong resident of Bloomington and a small
-										business owner, I started my own fence company to support
-										our growing family and it has been a very rewarding
-										experience for me. We treat every project as if it was our
-										own, ensuring that each fence not only meets, but exceeds
-										our customers’ expectations. &quot;
-									</p>
-									<p className="2xl:w-[11.5625rem] 2xl:min-h-[1.1875rem] 2xl:font-medium leading-[1.2rem] 2xl:font-lato 2xl:pt-2">Nicholas Rachuna, Owner</p>
-								</span>
-							</div>
-						</div>
-					</div>
-
-					<AnchorLink overlayChatIcon="rounded-full w-[2rem] 2xl:hidden bg-white mt-[10rem]">
-						<span>
-							<img src="/images/overlay chat.png" alt="icon" />
-						</span>
-					</AnchorLink>
+						</AnchorLink>
+					</motion.div>
 				</div>
-			</div>
 
-			<div className="2xl:absolute 2xl:top-[44rem] shadow-2xl z-50 2xl:w-[94.5rem] 2xl:hidden">
-				<ContactForm />
+				{/* Right Content - Visible on lg screens and up */}
+				<motion.div
+					className="hidden lg:flex flex-col justify-between w-full lg:w-1/2 pl-12 xl:pl-24"
+					initial={{ opacity: 0, x: 50 }}
+					animate={{ opacity: 1, x: 0 }}
+					transition={{ delay: 0.4, duration: 0.8 }}
+				>
+					<motion.div
+						className="flex flex-wrap gap-6 mb-12"
+						variants={{
+							hidden: { opacity: 0 },
+							visible: {
+								opacity: 1,
+								transition: {
+									staggerChildren: 0.15,
+									delayChildren: 0.6
+								}
+							}
+						}}
+						initial="hidden"
+						animate="visible"
+					>
+						{[
+							"Over 10 Years of Experience",
+							"Over 55 5* Reviews",
+							"Family Owned Business"
+						].map((item, index) => (
+							<motion.div
+								key={index}
+								className="flex items-center gap-3 text-white text-lg"
+								variants={itemVariants}
+							>
+								<span>
+									<img src="./images/icon1.png" alt="mark" className="w-6 h-6" />
+								</span>
+								<p>{item}</p>
+							</motion.div>
+						))}
+					</motion.div>
+
+					<motion.div
+						className="flex flex-col gap-8"
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.8 }}
+					>
+						<motion.div
+							className="flex flex-col gap-4"
+							variants={{
+								hidden: { opacity: 0 },
+								visible: {
+									opacity: 1,
+									transition: {
+										staggerChildren: 0.2,
+										delayChildren: 0.9
+									}
+								}
+							}}
+							initial="hidden"
+							animate="visible"
+						>
+							<motion.span
+								className="flex items-center gap-3 text-white"
+								variants={textVariants}
+							>
+								<img src="./images/Star.png" alt="star icon" className="w-6 h-6" />
+								<p className="text-lg">(5.0) ratings from 48 reviews</p>
+							</motion.span>
+
+							<motion.div
+								className="flex gap-4"
+								variants={{
+									hidden: { opacity: 0, scale: 0.9 },
+									visible: {
+										opacity: 1,
+										scale: 1,
+										transition: {
+											type: "spring",
+											stiffness: 200
+										}
+									}
+								}}
+							>
+								{["icon2", "icon3", "icon4"].map((icon, index) => (
+									<img
+										key={index}
+										src={`./images/${icon}.png`}
+										alt={`${icon} icon`}
+										className="w-10 h-10"
+									/>
+								))}
+							</motion.div>
+						</motion.div>
+
+						{!isModalOpen && (
+							<motion.div
+								initial={{ opacity: 0, y: 30 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ delay: 1.2, type: "spring" }}
+							>
+								<AvatarModal />
+							</motion.div>
+						)}
+					</motion.div>
+				</motion.div>
 			</div>
-		</>
+		</motion.div>
 	);
 }

@@ -8,34 +8,49 @@ export default function AccordionItems({
 	onSetOpen,
 	index,
 }) {
-
-    //checking if the index values match... It returns a boolean
 	const isOpen = curOpen === index;
 
-    //When any of the accordions is clicked on, the index of the clicked accordion is used to update the state
 	function handleToggle() {
 		onSetOpen(isOpen ? null : index);
 	}
 
 	return (
-		<div className="min-h-[2rem] mt-10 flex flex-col justify-center">
+		<div className={`transition-all duration-300 ease-in-out 
+      w-full max-w-3xl mx-auto my-2`}>
+
 			{/* Accordion header */}
-			<div className="flex min-h-[4rem] items-center gap-6 justify-center">
-				<button className="w-[2rem] text-[2rem]" onClick={handleToggle}>
-					{isOpen ? <SlArrowDownCircle/> : <PiPlusCircleThin />}
+			<div className={`flex items-center gap-4 p-4 rounded-lg cursor-pointer
+        transition-all duration-200 ease-in-out
+        hover:bg-gray-50 active:bg-gray-100
+        ${isOpen ? 'bg-gray-50' : ''}`}
+				onClick={handleToggle}>
+
+				<button
+					className={`flex-shrink-0 text-2xl transition-transform duration-300
+            ${isOpen ? 'text-blue-600 rotate-180' : 'text-gray-600'}`}
+					aria-label={isOpen ? "Collapse section" : "Expand section"}>
+					{isOpen ? <SlArrowDownCircle /> : <PiPlusCircleThin />}
 				</button>
 
-				<h2 className="text-[1.1rem] font-poppins text">{accordion.header}</h2>
+				<h2 className={`flex-grow font-poppins font-medium
+          text-base leading-snug text-left
+          ${isOpen ? 'text-gray-900' : 'text-gray-800'}`}>
+					{accordion.header}
+				</h2>
 			</div>
 
 			{/* Accordion body */}
-			{isOpen && (
-				<div className="w-[22.8rem] mx-auto px-1 py-2">
-					<p className="font-poppins text-[0.9rem] leading-6 font-thin tracking-wide">
-						{accordion.content}
-					</p>
-				</div>
-			)}
+			<div className={`overflow-hidden transition-all duration-300 ease-in-out
+        ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+				{isOpen && (
+					<div className="px-4 pb-6 ml-12 md:ml-14 lg:ml-16">
+						<p className="font-lato text-gray-700
+              text-sm leading-relaxed md:text-base md:leading-loose">
+							{accordion.content}
+						</p>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }

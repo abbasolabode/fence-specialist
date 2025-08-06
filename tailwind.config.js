@@ -15,7 +15,7 @@ const tailwindConfig = {
         'xl': '1280px',
         '2xl': '1512px',
       },
-     fontFamily: {  
+    fontFamily: {  
     poppins: ['"Poppins"', 'sans-serif'],  
     lato: ['"Lato"', 'sans-serif'],  
     raleway: ['"Raleway"', 'sans-serif'],  
@@ -28,6 +28,7 @@ const tailwindConfig = {
         dimBlack: 'hsla(210, 9%, 5%, 1)',
         dimGray: 'hsla(195, 9%, 11%, 1)',
         spanYellow: 'hsla(44, 100%, 49%, 1)',
+        grayColor: 'hsla(200, 7%, 25%, 1)',
       },
     },
   },

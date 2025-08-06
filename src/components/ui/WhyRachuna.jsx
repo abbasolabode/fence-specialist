@@ -40,48 +40,43 @@ const why = [
 
 export default function WhyRachuna() {
 	return (
-		<div className="2xl:w-[94.5rem] mt-[4rem]">
-			<div className="hidden 2xl:block w-full 2xl:h-[70.5rem] bg-utiliBlue pt-[5rem] mx-auto">
-				<div className="2xl:w-[89.5rem] 2xl:h-[55.5625rem] flex gap-[1.5rem]">
-					{/* Right container */}
-					<div className="w-2/4 min-h-full pl-[2.5rem]">
-						<h2 className="font-lato font-medium text-white text-[2.5rem] 2xl:w-[25rem] 2xl:min-h-[163rem]">
-							Why Rachuna Fence LLC is your{" "}
-							<span className="font-sourceSerif italic text-spanYellow">
-								fencing partner
-							</span>
-						</h2>
-					</div>
-
-					{/* Left container */}
-					<div className="w-3/4 ">
-						<div className=" 2xl:w-[52rem] 2xl:min-h-[15.6rem] grid grid-cols-2 gap-[2.5rem]">
-							{why.map((item) => (
-								<div
-									key={item.id}
-									className="2xl:w-[25.5rem] 2xl:min-h-[15.687rem] shadow-md rounded-[0.75rem] p-[1rem] flex flex-col gap-[1.5rem] bg-white"
-								>
-									<div className="w-[1.5rem] min-h-[1.5rem] text-spanYellow">
-										<FaRegCalendarDays />
-									</div>
-									<div className="w-[23.25rem] min-h-[10.6rem] flex flex-col justify-between">
-										<p className="w-[15rem] min-h-[1.1875rem] font-lato text-[1rem] font-semibold">
-											{item.header}
-										</p>
-										<p className="font-lato font-medium leading-7 w-[23.25rem] min-h-[8.75rem] text-[#3B4144]">
-											{item.content}
-										</p>
-									</div>
-								</div>
-							))}
-						</div>
-					</div>
+		<div className="w-full bg-utiliBlue pt-8 md:pt-12 lg:pt-16 xl:pt-20 py-[5rem]">
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				{/* Header Section */}
+				<div className="text-center lg:text-left mb-8 md:mb-12 lg:mb-16">
+					<h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-white">
+						Why Rachuna Fence LLC is your{" "}
+						<span className="italic text-spanYellow">fencing partner</span>
+					</h2>
 				</div>
-			</div>
 
-			<div className="">
-				<ContactFormWhy />
+				{/* Cards Grid */}
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 md:mb-12">
+					{why.map((item) => (
+						<div
+							key={item.id}
+							className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+						>
+							<div className="text-spanYellow text-2xl mb-4">
+								<FaRegCalendarDays />
+							</div>
+							<div>
+								<h3 className="text-lg md:text-xl font-semibold mb-3">
+									{item.header}
+								</h3>
+								<p className="text-gray-700 leading-relaxed">
+									{item.content}
+								</p>
+							</div>
+						</div>
+					))}
+				</div>
+
+				{/* Contact Form - Will appear below on all screens */}
+				<div className="mt-8 md:mt-12 lg:mt-16">
+					<ContactFormWhy />
+				</div>
 			</div>
 		</div>
 	);
-}
+  }
